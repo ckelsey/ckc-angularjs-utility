@@ -1,0 +1,21 @@
+{
+  "name": "ckc-angularjs-utility",
+  "version": "1.0.0",
+  "homepage": "https://github.com/ckelsey/ckc-angularjs-utility",
+  "authors": [
+    "ckelsey <chris@fordela.com>"
+  ],
+  "description": "An Angularjs module that has some common helper functions",
+  "main": "dist/utility.min.js",
+  "keywords": [
+    "Angularjs"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

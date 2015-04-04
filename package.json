@@ -1,0 +1,44 @@
+{
+  "name": "ckc-angularjs-utility",
+  "version": "1.0.0",
+  "description": "An Angularjs module that has some common helper functions",
+  "main": "dist/utility.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ckelsey/ckc-angularjs-utility"
+  },
+  "keywords": [
+    "Angularjs"
+  ],
+  "author": "Chris Kelsey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ckelsey/ckc-angularjs-utility/issues"
+  },
+  "homepage": "https://github.com/ckelsey/ckc-angularjs-utility/blob/master/README.md",
+  "dependencies": {
+    "bower": "^*",
+    "gulp": "^*",
+    "gulp-apidoc": "^*",
+    "gulp-minify-css": "^*",
+    "gulp-ngdocs": "^*",
+    "gulp-uglify": "^*",
+    "gulp-usemin": "^*",
+    "gulp-ng-html2js":"^*",
+    "gulp-minify-html":"^*",
+    "through2":"^*",
+    "gulp-util":"^*",
+    "minimize":"^*",
+  	"gulp-sourcemaps":"^*",
+  	"gulp-ng-annotate":"^*",
+  	"gulp-compass":"^*",
+  	"vinyl-fs":"^*",
+  	"gulp-uglifyjs":"^*",
+  	"gulp-concat":"^*",
+  	"gulp-notify":"^*",
+  	"gulp-livereload":"^*",
+  	"gulp-plumber":"^*",
+  	"gulp-concat-sourcemap":"^*"
+  }
+}
