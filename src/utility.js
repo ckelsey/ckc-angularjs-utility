@@ -85,8 +85,8 @@ angular.module('utility_module',[])
 		}
 		var colors = [],
 			rgb = (splits.length == 4)? 'rgba(' : 'rgb(',
-			bit = (16 * lum) - 16, 
-			a, 
+			bit = (16 * lum) - 16,
+			a,
 		i;
 		for (i = 0; i < 3; i++) {
 			a = Math.round(bit + splits[i]);
@@ -417,7 +417,7 @@ angular.module('utility_module',[])
 						"miliseconds":true,
 						"am_pm":false
 					});
-					break; 
+					break;
 				case "am_pm":
 					return self.get_time({
 						"timestamp":values.timestamp,
@@ -466,7 +466,7 @@ angular.module('utility_module',[])
 				then = then * 1000;
 			}
 		}
-		var date = new Date(then); 
+		var date = new Date(then);
 		console.log(date)
 		if(!date || date == 'Invalid Date'){
 			return 'Invalid Date';
@@ -503,8 +503,170 @@ angular.module('utility_module',[])
 					if(this[l].hasOwnProperty(key) && this[l][key] == v){return true;}
 				}
 				return false;
-			}			
+			}
 		);
 		return arr.hasObject(obj);
 	};
-}]);
+}])
+.directive('ellipsisBind',['$timeout',function($timeout){
+	return{
+		restrict:'A',
+		link:function(scope,elm,attrs,ctlr){
+			var original_symbol = (attrs.ellipsisSymbol)? attrs.ellipsisSymbol : '...';
+			var symbol = original_symbol;
+			var original_lines = (attrs.ellipsisLines)? attrs.ellipsisLines : 2;
+			var lines = original_lines;
+			var watch = (attrs.hasOwnProperty('ellipsisWatch'))? attrs.ellipsisWatch : false;
+			elm.css('position','relative');
+			var timer = null;
+			var original_html = elm.html();
+			var original_width = parseInt(elm.width());
+			var wrap = function(element){
+				var ellipse_wrapper = document.createElement('ellipse_wrapper');
+				var text_array = element.textContent.split('');
+				var text_length = text_array.length
+				for(var t=0;t<text_length;t++){
+					var ellipse_item = document.createElement('ellipse_item');
+					ellipse_item.textContent = text_array[t];
+					ellipse_wrapper.appendChild(ellipse_item);
+				}
+				var parent_element = element.parentNode;
+				parent_element.insertBefore(ellipse_wrapper, element);
+				parent_element.removeChild(element);
+			};
+			var cycle_children = function(element){
+				var children = element.childNodes;
+				var child_length = children.length;
+				for(var c=0;c<child_length;c++){
+					var this_child = children[c];
+					if(this_child.childNodes.length > 0){
+						cycle_children(this_child);
+					}else{
+						if(this_child.tagname !== 'ellipse_wrapper'){
+							wrap(this_child);
+						}
+					}
+				}
+			};
+			var show_hide = function(){
+				var line_height = parseInt(elm.css('line-height'));
+				var elements = elm[0].getElementsByTagName('ellipse_item');
+				var elements_array = Array.prototype.slice.call(elements);
+				var elements_length = elements_array.length;
+				for(var e=0;e<elements_length;e++){
+					var top = elements[e].offsetTop;
+					if(top < (line_height * lines)){
+						elements[e].className = top;
+					}else{
+						elements[e].className = 'hiding ' + top;
+					}
+				}
+				var hidden = elm[0].querySelectorAll('.hiding');
+				var hidden_array = Array.prototype.slice.call(hidden);
+				var hidden_length = hidden_array.length;
+				if(hidden_length > 0){
+					var first_hidden = hidden[0];
+					var symbol_length = symbol.length + 1;
+					while(symbol_length-- && first_hidden){
+						first_hidden = first_hidden.previousSibling;
+						if(first_hidden){
+							first_hidden.className = 'hiding hidden';
+						}
+					}
+					for(var h=0;h<hidden_length;h++){
+						hidden_array[h].className = 'hiding hidden';
+					}
+					var ellipsi = elm[0].querySelectorAll('.ellipsi');
+					if(ellipsi.length == 0){
+						var ellipsi = document.createElement('span');
+						ellipsi.className = 'ellipsi';
+						ellipsi.textContent = symbol;
+						elm[0].appendChild(ellipsi);
+					}
+				}else{
+					var ellipsi = elm[0].querySelectorAll('.ellipsi');
+					if(ellipsi.length > 0){
+						elm[0].removedChild(ellipsi[0]);
+					}
+				}
+			};
+			var get_html = function(){
+				if(timer !== null){$timeout.cancel(timer);}
+				var bound = attrs.ellipsisBind;
+				if(bound && bound !== ''){
+					if(bound.split('.').length > 1){
+						bound = bound.split('.');
+					}else{
+						bound = [bound];
+					}
+					var object = scope.$parent;
+					var object_length = bound.length;
+					for(var i=0;i<object_length;i++){
+						object = object[bound[i]];
+					}
+					var new_width = parseInt(elm.width());
+					if(original_html !== object || original_width !== new_width || lines !== original_lines || original_symbol !== symbol){
+						original_symbol = symbol;
+						original_width = new_width;
+						original_html = object;
+						original_lines = lines;
+						var element = document.createElement('span');
+						element.className = 'ellipsis_container';
+						element.innerHTML = original_html;
+						var children = element.childNodes;
+						var child_length = children.length;
+						for(var c=0;c<child_length;c++){
+							var this_child = children[c];
+							if(this_child.tagname !== 'ellipse_wrapper' && this_child.childNodes.length > 0){
+								cycle_children(this_child);
+							}else{
+								if(this_child.tagname !== 'ellipse_wrapper'){
+									wrap(this_child);
+								}
+							}
+						}
+						elm[0].innerHTML = '';
+						elm[0].appendChild(element);
+						show_hide();
+					}
+				}
+				reset();
+			};
+			var reset = function(){
+				timer = $timeout(get_html, 500);
+			};
+			get_html();
+			var addEvent = function(elem, type, eventHandle){
+				if(elem == null || typeof(elem) == 'undefined') return;
+				if(elem.addEventListener){
+					elem.addEventListener(type, eventHandle, false);
+				}else if(elem.attachEvent){
+					elem.attachEvent("on" + type, eventHandle);
+				}else{
+					elem["on"+type]=eventHandle;
+				}
+			};
+			addEvent(window, "resize", get_html());
+			if(watch == true || watch == "true"){
+				scope.$watch(function(){
+					return attrs.ellipsisLines;
+				},function(newVal){
+					if(newVal){
+						lines = newVal;
+						get_html();
+					}
+				},true);
+
+				scope.$watch(function(){
+					return attrs.ellipsisSymbol;
+				},function(newVal){
+					if(newVal){
+						symbol = newVal;
+						get_html();
+					}
+				},true);
+			}
+		}
+	};
+}])
+;
