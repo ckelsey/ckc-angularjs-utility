@@ -14,7 +14,8 @@ var gulp             = require('gulp'),
 	minifyHtml 		 = require("gulp-minify-html");
 	concatMap 		 = require('gulp-concat-sourcemap'),
 	ngAnnotate		 = require('gulp-ng-annotate'),
-	sourcemaps		 = require('gulp-sourcemaps');
+	sourcemaps		 = require('gulp-sourcemaps'),
+	markdown 		 = require('gulp-markdown');
 
 var notifyInfo = {
 	title: 'Gulp',
@@ -56,6 +57,13 @@ gulp.task('live', function() {
 	livereload.listen();
 	require('fs').writeFile('dist/builddate.js', 'console.log("'+new Date()+'")');
 	gulp.watch(scriptsToDo1, ['scripts1']);
+});
+
+gulp.task('md2html', function() {
+	return gulp.src('README.md')
+	.pipe(plumber(plumberErrorHandler))
+    .pipe(markdown())
+    .pipe(gulp.dest('docs'));
 });
 
 gulp.task('default', [

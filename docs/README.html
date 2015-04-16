@@ -1,0 +1,164 @@
+<h1 id="ckc-angularjs-utility">ckc-angularjs-utility</h1>
+<p>An Angularjs module that has some common helper functions</p>
+<h3 id="example">Example</h3>
+<h4 id="javascript">Javascript</h4>
+<pre><code class="lang-javascript">angular.module(&#39;st4rtApp&#39;,[
+    &#39;utility_module&#39;
+]).controller(&#39;AppCtlr&#39;, [&#39;Sendgrid&#39;, function (Sendgrid){
+    var self = this;
+    this.Sendgrid = Sendgrid;
+}]);
+</code></pre>
+<h3 id="methods">Methods</h3>
+<ul>
+<li><p><strong><em>.debug(anything)</em></strong></p>
+<ul>
+<li>Print a javascript expression, object, string, etc. in the console. It will also write the into the html as a return</li>
+</ul>
+</li>
+<li><p><strong><em>.domain()</em></strong></p>
+<ul>
+<li>Returns the current domain</li>
+</ul>
+</li>
+<li><p><strong><em>.scroll_to(string)</em></strong></p>
+<ul>
+<li>Scrolls the page to a specific element id(Angular has issues with anchor tags using hashtags)</li>
+</ul>
+</li>
+<li><p><strong><em>.trim_text(string, limit)</em></strong></p>
+<ul>
+<li>Trims the passed text to the passed length. If it is longer than specified, adds an ellipses</li>
+</ul>
+</li>
+<li><p><strong><em>.parse_json(json)</em></strong></p>
+<ul>
+<li>Safely returns an object from JSON. If error, returns the supplied json</li>
+</ul>
+</li>
+<li><p><strong><em>.stringify(object)</em></strong></p>
+<ul>
+<li>Safely returns a string from an object. If error, returns the supplied object</li>
+</ul>
+</li>
+<li><p><strong><em>.parse_commas(string)</em></strong></p>
+<ul>
+<li>Returns an array of a string split by commas</li>
+</ul>
+</li>
+<li><p><strong><em>.object_length(object)</em></strong></p>
+<ul>
+<li>Returns the number of properties in an object</li>
+</ul>
+</li>
+<li><p><strong><em>.color_luminance(color(string), adjustment(float))</em></strong></p>
+<ul>
+<li>Adjusts a given color(hex, rgb, rgba, hsl) up or down where 1 is 16 bits. Note 1, 0, -1 equals no change. Returns rgb()</li>
+</ul>
+</li>
+<li><p><strong><em>.convert_color(color(string), target_type(string))</em></strong></p>
+<ul>
+<li>Converts a color from one standard to another (hls, rgb, hex)</li>
+</ul>
+</li>
+<li><p><strong><em>.is_it(start(object), expression(string), equals(boolean))</em></strong></p>
+<ul>
+<li>Returns true or false. The first argument is either the starting object, array, string, number. The second argument is the object/array property path if it applies. Lastly, the third argument is what it should equal</li>
+</ul>
+</li>
+<li><p><strong><em>.to_text(HTML)</em></strong></p>
+<ul>
+<li>Takes html and converts it to text</li>
+</ul>
+</li>
+<li><p><strong><em>.validate_email(string)</em></strong></p>
+<ul>
+<li>Checks to see if the passed string is a valid email in that it contains &#39;@&#39; and a domain name</li>
+</ul>
+</li>
+<li><p><strong><em>.get_time(object{timestamp, hours, minutes, seconds, miliseconds, am_pm, delimiter})</em></strong></p>
+<ul>
+<li>Returns a formatted time as hour:minute:second:miliseconds AM/PM</li>
+</ul>
+</li>
+<li><p><strong><em>.format_date(object{date, display(string)})</em></strong></p>
+<ul>
+<li>Returns a formatted date using these keys:<ul>
+<li>year_short</li>
+<li>year_long</li>
+<li>month_number</li>
+<li>month_name_short</li>
+<li>month_name_long</li>
+<li>day_number</li>
+<li>day_name_short</li>
+<li>day_name_long</li>
+<li>hours</li>
+<li>minutes</li>
+<li>seconds</li>
+<li>miliseconds</li>
+<li>am_pm</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><em>.merge(object, object)</em></strong></p>
+<ul>
+<li>Merges object2 properties and values into object1</li>
+</ul>
+</li>
+<li><p><strong><em>.math(method(string), expression(number/string))</em></strong></p>
+<ul>
+<li>Will perform javascript math functions in a template</li>
+</ul>
+</li>
+<li><p><strong><em>.is_past(then(date))</em></strong></p>
+<ul>
+<li>Will compare the current date and time with a supplied date and time to see if it is in the past or not</li>
+</ul>
+</li>
+<li><p><strong><em>.trust_url(string)</em></strong></p>
+<ul>
+<li>An angular helper to that declares a safe url to bind to. Only use if you know the source of the url</li>
+</ul>
+</li>
+<li><p><strong><em>.trust_html(anything)</em></strong></p>
+<ul>
+<li>An angular helper to that declares safe html to bind to. Only use if you know the source of the html</li>
+</ul>
+</li>
+</ul>
+<h3 id="directives">Directives</h3>
+<ul>
+<li><p><strong><em>ellipsis-bind</em></strong></p>
+<ul>
+<li><p>Limits a body of text by a specified number of lines</p>
+</li>
+<li><p><strong><em>Attributes</em></strong></p>
+<ul>
+<li><strong><em>ellipsis-symbol</em></strong><ul>
+<li>Defaults to &quot;...&quot;, can be whatever you want</li>
+</ul>
+</li>
+<li><strong><em>ellipsis-lines</em></strong><ul>
+<li>Defaults to &quot;...&quot;, can be whatever you want</li>
+</ul>
+</li>
+<li><strong><em>ellipsis-watch</em></strong><ul>
+<li>Makes Angular specifically watch the text, in case it&#39;s going to change</li>
+</ul>
+</li>
+<li><strong><em>ellipsis-bind</em></strong><ul>
+<li>What calls the directive as well as defines what is the text</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="use">Use</h3>
+<ul>
+<li><strong><em>Bower</em></strong> - ckc-angularjs-utility</li>
+<li>Add &quot;utility_module&quot; to your app&#39;s dependencies</li>
+<li>Add &quot;utility.min.js&quot; to your scripts</li>
+</ul>

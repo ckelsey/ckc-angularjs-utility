@@ -44,7 +44,17 @@ angular.module('utility_module',[])
 	};
 
 	this.stringify = function(obj){
-		return JSON.stringify(obj);
+		try{
+			return JSON.stringify(obj);
+		}
+		catch(e){
+			try{
+				return obj.toString();
+			}
+			catch(e){
+				return obj;
+			}
+		}
 	};
 
 	this.parse_commas = function(str){
