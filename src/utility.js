@@ -31,6 +31,10 @@ angular.module('utility_module',[])
 		return truths;
 	};
 
+	this.url_decode = function(str){
+		return decodeURIComponent(str);
+	};
+
 	this.parse_json = function(json){
 		var obj = null;
 		try{
