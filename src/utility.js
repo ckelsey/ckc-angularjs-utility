@@ -502,6 +502,7 @@ angular.module('utility_module',[])
 
 	this.trust_html = function(str){
 		try{
+			var str = angular.element('<textarea />').html(str).text();
 			return $sce.trustAsHtml(str);
 		}catch(e){
 			console.log(e)
