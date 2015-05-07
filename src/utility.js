@@ -214,19 +214,23 @@ angular.module('utility_module',[])
 	}
 
 	this.is_it = function(start, expression, equals){
-		var check_truth = function(it, equals){
-			if(it){
-				if(it !== null){
-					if(it !== ''){
-						if(it !== undefined){
-							if(equals && equals !== undefined){
-								if(it == equals){
-									return true;
+		if(typeof start){
+			var check_truth = function(it, equals){
+				if(it){
+					if(it !== null){
+						if(it !== ''){
+							if(it !== undefined){
+								if(equals && equals !== undefined){
+									if(it == equals){
+										return true;
+									}else{
+										return false;
+									}
 								}else{
-									return false;
+									return true;
 								}
 							}else{
-								return true;
+								return false;
 							}
 						}else{
 							return false;
@@ -237,30 +241,30 @@ angular.module('utility_module',[])
 				}else{
 					return false;
 				}
-			}else{
-				return false;
-			}
-		};
-		if(start && (typeof start == 'object' || typeof start == 'array') && expression){
-			var toCheck = expression.split('.');
-			var len = toCheck.length;
-			var results = [];
-			var it = start;
-			for(var i=0;i<len;i++){
-				if((typeof it == 'object' && toCheck[i] in it) || (typeof it == 'array' && it[toCheck[i]])){
-					results.push(1);
-					it = it[toCheck[i]];
+			};
+			if(start && (typeof start == 'object' || typeof start == 'array') && expression){
+				var toCheck = expression.split('.');
+				var len = toCheck.length;
+				var results = [];
+				var it = start;
+				for(var i=0;i<len;i++){
+					if((typeof it == 'object' && toCheck[i] in it) || (typeof it == 'array' && it[toCheck[i]])){
+						results.push(1);
+						it = it[toCheck[i]];
+					}else{
+						return false;
+					}
+				}
+				if(results.length == len){
+					return check_truth(it,equals);
 				}else{
 					return false;
 				}
-			}
-			if(results.length == len){
-				return check_truth(it,equals);
+			}else if(start == equals){
+				return true;
 			}else{
 				return false;
 			}
-		}else if(start == equals){
-			return true;
 		}else{
 			return false;
 		}
