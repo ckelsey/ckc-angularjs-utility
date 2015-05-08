@@ -353,6 +353,13 @@ angular.module('utility_module',[])
 	};
 
 	this.format_date = function(object){
+		function merge_options(obj1,obj2){
+			var obj3 = {};
+			for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+			for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+			return obj3;
+		}
+
 		var now = new Date();
 		now = now.getTime();
 		var values_keys = ["year_short", "year_long", "month_number", "month_name_short", "month_name_long", "day_number", "day_name_short", "day_name_long", "hours", "minutes", "seconds", "miliseconds", "am_pm"];
@@ -362,7 +369,7 @@ angular.module('utility_module',[])
 			"display":"day_name_long month_name_long day_number, year_long hours:minutes am_pm"
 		}
 
-		var values = self.merge_into(defaults, object);
+		var values = merge_options(defaults, object);
 		values.timestamp = (values.timestamp == '')? values.timestamp = now : values.timestamp;
 		values.timestamp = (values.timestamp.length < 13)? values.timestamp * 13 : values.timestamp;
 		var date = new Date(values.timestamp);
