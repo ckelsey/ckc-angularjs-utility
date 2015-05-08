@@ -352,6 +352,36 @@ angular.module('utility_module',[])
 		return time;
 	};
 
+	this.format_time = function(seconds, clock){
+		var sec_num = parseInt(seconds, 10); // don't forget the second param
+		var hours   = Math.floor(sec_num / 3600);
+		var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+		var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+		if(clock){
+			if (hours   < 10) {hours   = "0"+hours;}
+			if (minutes < 10) {minutes = "0"+minutes;}
+			if (seconds < 10) {seconds = "0"+seconds;}
+			var time    = hours+':'+minutes+':'+seconds;
+			return time;
+		}else{
+			var time = [];
+			if(hours > 0){
+				time.push(hours + ' hours');
+			}
+
+			if(minutes > 0){
+				time.push(minutes + ' minutes');
+			}
+
+			if(seconds > 0){
+				time.push(seconds + ' seconds');
+			}
+
+			return time.join(', ');
+		}
+	};
+
 	this.format_date = function(object){
 		function merge_options(obj1,obj2){
 			var obj3 = {};
