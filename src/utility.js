@@ -242,17 +242,17 @@ angular.module('utility_module',[])
                     return false;
                 }
             };
-            if(start && (typeof start == 'object' || typeof start == 'array') && expression){
+            if(start && start !== null && (typeof start == 'object' || typeof start == 'array') && expression){
                 var toCheck = expression.split('.');
                 var len = toCheck.length;
                 var results = [];
                 var it = start;
                 for(var i=0;i<len;i++){
-                    if((typeof it == 'object' && toCheck[i] in it) || (typeof it == 'array' && it[toCheck[i]])){
+                    if(it !== null && (typeof it == 'object' && toCheck[i] in it) || (typeof it == 'array' && it[toCheck[i]])){
                         results.push(1);
                         it = it[toCheck[i]];
                         if((i+1) == len){
-                            if(typeof it == 'object'){
+                            if(it !== null && typeof it == 'object'){
                                 var props = [];
                                 for(var p in it){
                                     props.push(p);
@@ -260,7 +260,7 @@ angular.module('utility_module',[])
                                 if(props.length == 0){
                                     return false;
                                 }
-                            }else if(typeof it == 'array'){
+                            }else if(it !== null && typeof it == 'array'){
                                 if(it.length == 0){
                                     return false;
                                 }
@@ -277,7 +277,7 @@ angular.module('utility_module',[])
                 }else{
                     return false;
                 }
-            }else if(start && (typeof start == 'object' || typeof start == 'array')){
+            }else if(start && start !== null && (typeof start == 'object' || typeof start == 'array')){
                 var props = [];
                 for(var p in start){
                     props.push(p);
