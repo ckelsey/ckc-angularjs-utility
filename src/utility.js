@@ -592,46 +592,15 @@ angular.module('utility_module',[])
     };
 
     this.object_path = function(object, path, value){
-        if(object && object !== null && (typeof object == 'object' || typeof object == 'array') && path !== undefined && path !== null && path !== '' && typeof path === 'string'){
+        if((typeof object === 'object' || typeof object === 'array') && path !== '' && typeof path === 'string'){
             var properties = path.split('.');
             if(properties.length > 1){
                 var new_object = object[properties[0]];
                 properties.shift();
-                return self.object_path(new_object, properties, value);
+                return self.object_path(new_object, properties.join('.'), value);
             }else{
                 return (value)? object[properties[0]] = value : object[properties[0]];
             }
-
-/*
-            var toCheck = path.split('.');
-            var len = toCheck.length;
-            var results = [];
-            var it = object;
-            for(var i=0;i<len;i++){
-                if(it !== null && (typeof it == 'object' && toCheck[i] in it) || (typeof it == 'array' && it[toCheck[i]])){
-                    it = it[toCheck[i]];
-                    if((i+1) == len){
-                        if(it !== null && typeof it == 'object'){
-                            var props = [];
-                            for(var p in it){
-                                props.push(p);
-                            }
-                            if(props.length == 0){
-                                return false;
-                            }
-                        }else if(it !== null && typeof it == 'array'){
-                            if(it.length == 0){
-                                return false;
-                            }
-                        }else if(!it || it == '' || it == undefined){
-                            return false;
-                        }
-                    }
-                }else{
-                    return false;
-                }
-            }
-            */
         }
     };
 }])
