@@ -427,7 +427,7 @@ angular.module('utility_module',[])
         }
 
         var values = merge_options(defaults, object);
-        values.timestamp = (values.timestamp == '')? values.timestamp = now : values.timestamp;
+        values.timestamp = (values.timestamp == '' || !values.timestamp)? values.timestamp = now : values.timestamp;
         values.timestamp = (values.timestamp.length < 13)? values.timestamp * 13 : values.timestamp;
         var date = new Date(values.timestamp);
         var month_array_short = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
