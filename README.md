@@ -13,6 +13,12 @@ angular.module('st4rtApp',[
 ```
 
 ###Methods
+* ___.localStorageSize()___
+  * Returns the size of localStorage in KB
+
+* ___.log(somethingToLog, titleString)___
+  * Formatted console.log()
+
 * ___.debug(anything)___
   * Print a javascript expression, object, string, etc. in the console. It will also write the into the html as a return
 

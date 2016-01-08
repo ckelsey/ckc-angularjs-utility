@@ -26,6 +26,25 @@ angular.module('utility_module',[])
         }
     };
 
+    this.localStorageSize = function(){
+        var t = 0;
+        for(var x in localStorage){
+            t += (((localStorage[x].length * 2)));
+        }
+        var result = t/1024+ " KB";
+        console.log(result);
+        return result;
+    };
+
+    this.log = function(toLog, title){
+        console.log('------------------------------------');
+        console.log(' ');
+        if(title) console.log(title);
+        console.log(toLog);
+        console.log(' ');
+        console.log('------------------------------------');
+    };
+
     this.ev = function(str){
         var truths = str;
         return truths;
