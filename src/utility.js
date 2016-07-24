@@ -884,7 +884,7 @@
 					try {
 						return JSON.stringify(data);
 					} catch (e) {
-						return input.toString();
+						return data;
 					}
 				}
 				ngModel.$parsers.push(into);
