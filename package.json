@@ -34,7 +34,6 @@
         "gulp-ng-annotate":"^*",
         "gulp-compass":"^*",
         "vinyl-fs":"^*",
-        "gulp-uglifyjs":"^*",
         "gulp-concat":"^*",
         "gulp-notify":"^*",
         "gulp-livereload":"^*",
@@ -42,6 +41,9 @@
         "gulp-concat-sourcemap":"^*",
         "gulp-markdown":"^*",
         "gulp-autoprefixer":"^*",
-        "gulp-rename":"^*"
+        "gulp-rename":"^*",
+		"gulp-angular-embed-templates": "^*",
+		"jshint": "^*",
+  	  	"gulp-jshint": "^*"
     }
 }

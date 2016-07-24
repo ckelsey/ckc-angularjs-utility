@@ -2,7 +2,7 @@ var gulp             = require('gulp'),
 	compass          = require('gulp-compass'),
 	autoprefixer     = require('gulp-autoprefixer'),
 	minifycss        = require('gulp-minify-css'),
-	uglify           = require('gulp-uglifyjs'),
+	uglify 			 = require('gulp-uglify'),
 	rename           = require('gulp-rename'),
 	concat           = require('gulp-concat'),
 	notify           = require('gulp-notify'),
@@ -15,6 +15,8 @@ var gulp             = require('gulp'),
 	concatMap 		 = require('gulp-concat-sourcemap'),
 	ngAnnotate		 = require('gulp-ng-annotate'),
 	sourcemaps		 = require('gulp-sourcemaps'),
+	jshint			 = require('gulp-jshint'),
+	embedTemplates	 = require('gulp-angular-embed-templates'),
 	markdown 		 = require('gulp-markdown');
 
 var notifyInfo = {
@@ -29,33 +31,33 @@ var plumberErrorHandler = { errorHandler: notify.onError({
 })
 };
 
-gulp.task('buildDate', function(){
-	return require('fs').writeFile('dist/builddate.js', 'console.log('+new Date()+')');
-});
-function string_src(filename, string) {
-	var src = require('stream').Readable({ objectMode: true });
-	src._read = function () {
-		this.push(new gutil.File({ cwd: "", base: "", path: filename, contents: new Buffer(string) }));
-		this.push(null);
-	}
-	return src;
-}
+
 
 var scriptsToDo1 = [
 	'src/*.js'
 ];
 
 gulp.task('scripts1', function() {
-	require('fs').writeFile('dist/builddate.js', 'console.log("'+new Date()+'")');
 	return gulp.src(scriptsToDo1)
 	.pipe(plumber(plumberErrorHandler))
-	.pipe(uglify('utility.min.js', {outSourceMap: true}))
+	.pipe(sourcemaps.init())
+	.pipe(ngAnnotate({
+		// true helps add where @ngInject is not used. It infers.
+		// Doesn't work with resolve, so we must be explicit there
+		add: true
+	}))
+	.pipe(embedTemplates())
+	.pipe(jshint())
+	.pipe(jshint.reporter('default'))
+	.pipe(concat('utility.min.js'))
+	.pipe(gulp.dest('dist'))
+	.pipe(uglify())
+	.pipe(sourcemaps.write('./'))
 	.pipe(gulp.dest('dist'))
 });
 
 gulp.task('live', function() {
 	livereload.listen();
-	require('fs').writeFile('dist/builddate.js', 'console.log("'+new Date()+'")');
 	gulp.watch(scriptsToDo1, ['scripts1']);
 });
 

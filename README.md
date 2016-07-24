@@ -43,17 +43,26 @@ angular.module('st4rtApp',[
 * ___.object_length(object)___
   * Returns the number of properties in an object
 
+* ___.object_path(object, string, any)___
+  * Given an object or array and a period delimited string. If the third argument is undefined, the value is returned, otherwise a value is set on the given path
+
 * ___.color_luminance(color(string), adjustment(float))___
   * Adjusts a given color(hex, rgb, rgba, hsl) up or down where 1 is 16 bits. Note 1, 0, -1 equals no change. Returns rgb()
 
 * ___.convert_color(color(string), target_type(string))___
   * Converts a color from one standard to another (hls, rgb, hex)
 
+* ___.typeOf(any)___
+  * Returns the type of element, either undefined, null, boolean, number, date, string, array, object, function
+
 * ___.is_it(start(object), expression(string), equals(boolean))___
   * Returns true or false. The first argument is either the starting object, array, string, number. The second argument is the object/array property path if it applies. Lastly, the third argument is what it should equal
 
 * ___.to_text(HTML)___
   * Takes html and converts it to text
+
+* ___.url_decode(string)___
+  * Returns decodeURIComponent(string). For use in templates if needed
 
 * ___.validate_email(string)___
   * Checks to see if the passed string is a valid email in that it contains '@' and a domain name
@@ -76,6 +85,10 @@ angular.module('st4rtApp',[
     * seconds
     * miliseconds
     * am_pm
+
+* ___.format_time(number:seconds, boolean})___
+  * Returns a formatted time string.
+
 * ___.merge(object, object)___
   * Merges object2 properties and values into object1
 
@@ -104,6 +117,18 @@ angular.module('st4rtApp',[
       * Makes Angular specifically watch the text, in case it's going to change
     * ___ellipsis-bind___
       * What calls the directive as well as defines what is the text
+
+
+* ___toggle-parent___
+  * Adds/removes class on parent element when clicked
+
+  * ___Attributes___
+    * ___toggle-parent___
+      * Class to toggle
+
+* ___json-text___
+  * Converts ng-model to display as json but saved as an object
+
 
 
 ###Use
