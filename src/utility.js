@@ -896,7 +896,7 @@
         };
     });
 
-    utility.service('debouncer', function() {
+    utility.service('debouncer', function($q) {
         /**
          * Object of timers with keys from the `name` option.
          */
